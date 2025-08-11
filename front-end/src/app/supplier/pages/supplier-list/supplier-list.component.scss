@@ -1,0 +1,22 @@
+.filter-form {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 8px;
+}
+
+.small-field {
+  font-size: 14px;
+
+  input {
+    font-size: 14px;
+  }
+
+  mat-label {
+    font-size: 14px;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,107 @@
+<div class="form-wrapper">
+  <mat-card class="form-card">
+    <mat-toolbar color="primary">Company Registration</mat-toolbar>
+    <mat-card-content>
+      <form [formGroup]="form" class="form-fields">
+        <!-- TradeName -->
+        <mat-form-field appearance="fill">
+          <mat-label>TradeName</mat-label>
+          <input matInput formControlName="tradeName" />
+          <mat-icon matSuffix>label</mat-icon>
+          <mat-error *ngIf="form.controls['tradeName'].hasError('required')">
+            This field is required.
+          </mat-error>
+          <mat-error *ngIf="form.controls['tradeName'].hasError('minlength')">
+            Minimum of 2 characters required.
+          </mat-error>
+          <mat-error *ngIf="form.controls['tradeName'].hasError('maxlength')">
+            Maximum of 20 characters allowed.
+          </mat-error>
+        </mat-form-field>
+        <!-- ZipCode -->
+        <mat-form-field appearance="fill">
+          <mat-label>Zipcode</mat-label>
+          <input matInput formControlName="zipCode" [mask]="'00.000-000'" />
+          <mat-icon matSuffix>location_on</mat-icon>
+          <mat-error
+            *ngIf="
+              form.controls['zipCode'].hasError('required');
+              else zipCodeLength
+            "
+          >
+            This field is required.
+          </mat-error>
+          <ng-template #zipCodeLength>
+            <mat-error
+              *ngIf="form.controls['zipCode'].hasError('invalidZipCodeLength')"
+            >
+              Zipcode must be exactly 8 digits.
+            </mat-error>
+          </ng-template>
+        </mat-form-field>
+        <!-- CNPJ -->
+        <mat-form-field appearance="fill">
+          <mat-label>CNPJ</mat-label>
+          <input
+            matInput
+            formControlName="cnpj"
+            [mask]="'00.000.000/0000-00'"
+          />
+          <mat-icon matSuffix>badge</mat-icon>
+          <mat-error *ngIf="form.controls['cnpj'].hasError('required')">
+            This field is required.
+          </mat-error>
+          <mat-error *ngIf="form.controls['cnpj'].hasError('minlength')">
+            CNPJ must be exactly 14 digits.
+          </mat-error>
+          <mat-error *ngIf="form.controls['cnpj'].hasError('maxlength')">
+            CNPJ must be exactly 14 digits.
+          </mat-error>
+        </mat-form-field>
+        <!-- Suppliers -->
+        <div>
+          <mat-form-field style="width: 80%">
+            <mat-label>Suppliers</mat-label>
+            <mat-select
+              formControlName="suppliers"
+              multiple
+              (selectionChange)="onSupplierSelectionChange($event)"
+            >
+              @for (supplier of this.suppliers; track supplier) {
+              <mat-option [value]="supplier">{{ supplier.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <button
+            mat-icon-button
+            (click)="addSupplier()"
+            class="add-supplier"
+            matTooltip="Add Supplier"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="actions-center">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSubmit()"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Save
+      </button>
+      <button
+        mat-raised-button
+        (click)="onCancel()"
+        class="btn-space"
+        type="button"
+      >
+        Cancel
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

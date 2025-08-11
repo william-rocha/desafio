@@ -1,0 +1,26 @@
+<mat-card appearance="outlined">
+  <!-- <mat-toolbar color="primary">Companies</mat-toolbar> -->
+
+  <div
+    class="mat-elevation-z8"
+    *ngIf="itemsPage$ | async as itemsPage; else loading"
+  >
+    <!-- conteudo da lista -->
+    <ng-content class="table-list-content" />
+
+    <mat-paginator
+      aria-label="Select page of companies"
+      showFirstLastButtons
+      [pageSizeOptions]="[5, 10, 15]"
+      [length]="itemsPage.totalElements"
+      [pageIndex]="pageEvent.pageIndex"
+      [pageSize]="pageEvent.pageSize"
+      (page)="refresh($event)"
+    ></mat-paginator>
+  </div>
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</mat-card>

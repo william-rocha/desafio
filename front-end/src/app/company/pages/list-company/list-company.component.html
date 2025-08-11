@@ -1,0 +1,13 @@
+<app-list-container
+  [itemsPage$]="companyPage$"
+  (refresh)="refresh($event)"
+  [pageEvent]="pageEvent"
+>
+  <app-table-list
+    [data]="(companyPage$ | async)?.companies || []"
+    [displayedColumns]="['id', 'cnpj', 'tradeName', 'zipCode']"
+    (edit)="onEdit($event)"
+    (remove)="onRemove($event)"
+    (add)="onAdd()"
+  ></app-table-list>
+</app-list-container>
